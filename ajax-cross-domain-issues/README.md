@@ -112,7 +112,7 @@ http://server_1.com/images/1.png  --转发至--> http://server_2.com/1.png
 
 jsonp 全称为 JSON with padding，而 padding 意为填充。所以需要注意的是 jsonp ≠ json 不能混淆二者之间的关系。
 
-jsonp 与 Ajax 不是一回事，而是通过动态插入 `script` 标记然后出发网络请求，得到 js 文件
+jsonp 与 Ajax 不是一回事，而是通过动态插入 `script` 标记然后出发网络请求，得到 js 文档
 
 例如现有 a.js:
 
@@ -122,7 +122,7 @@ var data = {name: hxtao};
 console.log(data);
 ```
 
-然后页面中添加 `<script src="a.js"></script>` 可想而知，控制台会输出 `data` , console.log() 函数为全局方法。
+然后页面中添加 `<script src="a.js"></script>` 可想而知，控制台会输出 `data` , 值得注意的是 console.log() 函数为全局方法。
 
 所以我们可以简单封装下：
 
