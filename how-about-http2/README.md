@@ -1,5 +1,6 @@
 # how about HTTP/2
 
+![http2](images/mind.png)
 
 ## 追本溯源
 
@@ -44,6 +45,25 @@ HTTP/2 基于 google 的 SPDY/2 开发。
 
 而 HTTP/2 的服务器推送就可神气了，在服务器接受到请求时，就可分析出要推送的资源（无需产生额外的网络请求），然后先发个 PUSH_PROMISE 帧给浏览器，再由浏览器决定是否接受推送（当前无相应缓存则接受否则拒绝），显然这整个过程无需程序员操心，浏览器和服务器会自行沟通。
 
+很可惜 Nginx 还暂不支持 server push (坑了我一天)，供上 Node 核心代码（完整源码请看 [demo](demo)）聊表慰藉：
+
+```javascript
+// ...
+let push_style = res.push('/static/style.css', {
+  status: 200,
+  method: 'GET',
+  request: {
+    accept: '*/*'
+  },
+  response: {
+    'Content-Type': 'text/css'
+  }
+});
+
+push_style.end(static.style);
+// ..
+```
+
 ## 体验
 
 [HTTP/2 is the future of the Web, and it is here!](https://http2.akamai.com/demo)
@@ -52,5 +72,5 @@ HTTP/2 基于 google 的 SPDY/2 开发。
 
 - [HTTP/2 新特性浅析](https://segmentfault.com/a/1190000002765886)
 - [HTTP/2协议–特性扫盲篇](http://www.cnblogs.com/yingsmirk/p/5248506.html)
-- [HTTP/2 Server Push 如何利用?](https://segmentfault.com/q/1010000002706107)
-- <https://ye11ow.gitbooks.io/http2-explained/content/part6.html>
+- [A kick-start into server push](https://slemgrim.com/kickstart-into-server-push/)
+- [HTTP/2 Server Push with NGINX, CloudFlare and WordPress](https://odd-one-out.serek.eu/http2-server-push-nginx-cloudflare-wordpress/)
