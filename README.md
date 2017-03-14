@@ -9,4 +9,7 @@ Ubuntu下绘制工具 [xmind](http://www.xmind.net/)
 1. Ajax 跨域问题
 
 ![Ajax 跨域问题.png](./ajax-cross-domain-issues/mind.png)
+
+2. 拥抱 HTTP/2
+
 ![http2](./how-about-http2/images/mind.png)
