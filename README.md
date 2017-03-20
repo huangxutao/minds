@@ -17,3 +17,9 @@ Ubuntu下绘制工具 [xmind](http://www.xmind.net/)
 ---
 
 ![http2](./how-about-http2/images/mind.png)
+
+### 3. JS 作用域
+
+---
+
+![JS Scope](./js-scope/images/mind.png)
