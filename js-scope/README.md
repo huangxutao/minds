@@ -168,6 +168,7 @@ console.log(err);  // => 'Uncaught ReferenceError: err is not defined'
 
 当然与 with 类似在非严格模式下 try/catch 任一分支中 var 声明的变量将被添加到其外一层作用域中，未 var 声明的变量将直接提升至全局作用域中；
 
+此外，在 IE8 及其之前版本中 catch 语句中捕获的的错误对象将被添加到所处作用域中，而非 catch 语句内，即 catch 外部依旧可访问到错误对象，IE9 修复了该 bug。
 
 ### ES6 语法糖
 
