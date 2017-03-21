@@ -198,7 +198,7 @@ console.log(a);
 
 with 之前有说明，我们来看看 eval:
 
-```
+```javascript
 function foo(str) {
   eval(str);
   console.log(a);
