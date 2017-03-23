@@ -6,7 +6,7 @@
   "scripts": {
     "build": "./docs/.bin/build && cd docs/ && browser-sync start --server --files '**'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "autoprefixer": "cd docs/source/css && postcss -u autoprefixer --no-map --autoprefixer.browsers '> 5%, ie 9' -r "
+    "autoprefixer": "postcss -u autoprefixer --no-map --autoprefixer.browsers '> 5%, ie 9' -r "
   },
   "repository": {
     "type": "git",
