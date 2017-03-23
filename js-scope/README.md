@@ -1,5 +1,7 @@
 # JS 作用域
 
+## 我的理解
+
 ![js scope](images/mind.png)
 
 ## 何为作用域？
