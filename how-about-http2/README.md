@@ -1,5 +1,7 @@
 # how about HTTP/2
 
+## 我的理解
+
 ![http2](images/mind.png)
 
 ## 追本溯源
