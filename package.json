@@ -1,0 +1,29 @@
+{
+  "name": "minds",
+  "version": "1.0.0",
+  "description": "整理汇总知识点然后绘制思维导图是个不错的 idea",
+  "main": "index.js",
+  "scripts": {
+    "build": "./docs/.bin/build && cd docs/ && browser-sync start --server --files '**'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "autoprefixer": "cd docs/source/css && postcss -u autoprefixer --no-map --autoprefixer.browsers '> 5%, ie 9' -r "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huangxutao/minds.git"
+  },
+  "author": "huangxutao <h784124804@gmail.com> (https://hxtao.site/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huangxutao/minds/issues"
+  },
+  "homepage": "https://github.com/huangxutao/minds#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "browser-sync": "^2.18.8",
+    "ejs": "^2.5.6",
+    "highlightjs": "^9.10.0",
+    "marked": "^0.3.6",
+    "postcss-cli": "^3.0.0"
+  }
+}

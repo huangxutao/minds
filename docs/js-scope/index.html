@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总,  JS 作用域">
+  <meta name="x5-page-mode" content="app">
+  <title> JS 作用域</title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1> JS 作用域</h1>
+      <h2>js scope</h2>
+      <a href="https://github.com/huangxutao/minds/tree/master/js-scope">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <a href="#我的理解"><h2 id="我的理解">我的理解</h2></a><p><img src="images/mind.png" alt="js scope"></p>
+<a href="#何为作用域？"><h2 id="何为作用域？">何为作用域？</h2></a><p>简单来说，就是一套规则，用于程序确认在何处以及如何查找变量</p>
+<p>那为什么需要这么一套规则？</p>
+<p>程序有趣的运行势必离不开变量的协助，然而对于程序而言用到变量就意味着要先去寻得变量（它在哪里？）当然光知道了在哪还不行，还得知道怎么拿到变量，并且不能乱拿，所以就需要一套规则来约束程序有序合理地获取变量。</p>
+<p>就好比早上起床我（程序）要刷牙了，势必要用到牙膏牙刷（变量），那么得先知道它们放在哪了吧，然后我睡眼一眯，我的脸盆里有放着牙膏牙刷，室友的脸盆里也有还是新的呢，虽然睡意尚在但也不能糊涂了不是，不能把室友的拿来用哈（不能乱拿，要有规则）。</p>
+<a href="#作用域的工作模式"><h2 id="作用域的工作模式">作用域的工作模式</h2></a><p>作用域共有两种主要的工作模式：</p>
+<ul>
+<li>词法作用域</li>
+<li>动态作用域</li>
+</ul>
+<p>其中词法作用域模式广为多数编程语言所采用，JS 便在此列。</p>
+<a href="#词法作用域"><h2 id="词法作用域">词法作用域</h2></a><p>简单地说，词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的。</p>
+<p>话句话说就是，你变量在哪定义其作用域便在哪。</p>
+<a href="#JS 的情况"><h2 id="JS 的情况">JS 的情况</h2></a><p>与其它语言不同 JS 在 ES6 标准之前并无真正意义上的块作用域，最为实用到的便是全局作用域和函数作用域。</p>
+<p>多说无益，看图说话：</p>
+<p><img src="images/eg.png" alt="js scope"></p>
+<p>① 包含着整个全局作用域，变量 name，函数 foo 所处全局作用域</p>
+<p>② 包含着函数 foo 创建的作用域，变量 name 、age，函数 bar 所处函数 foo 创建的作用域</p>
+<p>③ 包含着函数 bar 创建的作用域，其中只有一个标识符：name</p>
+<p>执行这段程序首先输出 &#39;bar 18&#39;，然后报引用错误 <code>ReferenceError: bar is not defined</code>。</p>
+<p><img src="images/eg1.png" alt="js scope"></p>
+<p>可见在 JS 中函数在执行查找变量时，根据当前所处作用域由内向外查找，如果多层的嵌套作用域中存在同名变量时，内部作用域的变量值将屏蔽外部作用域的同名变量的值，简单来说就是由内向外就近原则；</p>
+<p>此外，外部作用域无法直接访问其内部作用域中的变量或者函数。</p>
+<a href="#再理解词法作用域"><h2 id="再理解词法作用域">再理解词法作用域</h2></a><p>为了加深词法作用域的理解，比较下面两段程序：</p>
+<p>程序1：</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'global'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> name = <span class="hljs-string">'foo'</span>;
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(name);
+  }
+
+  bar();
+}
+
+foo();
+</code></pre>
+<p>程序2：</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'global'</span>;
+<span class="hljs-keyword">var</span> getName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(name);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> name = <span class="hljs-string">'foo'</span>;
+  <span class="hljs-keyword">var</span> bar = getName;
+
+  bar();
+}
+
+foo();
+</code></pre>
+<p>执行结果输出，程序1：&#39;foo&#39;，程序2：&#39;global&#39;。</p>
+<p>程序1中的函数 bar 在函数 foo 所创建的作用域中被声明，结果输出为 &#39;foo&#39; 不难理解；</p>
+<p>程序2中变量 bar 在函数 foo 所创建的作用域中声明，且被赋值为 getName，而 getName 为全局作用域中的一个引用类型的变量，其在栈内存中存储的不是一个直接量，而是指向一个匿名函数的地址（指针），所以在被赋值给变量 bar 时，只是进行了一个地址的拷贝，变量 bar 和 getName 都指向同一个函数对象。这样一来程序2运行 bar() 就等同于调用 getName() ,而 getName 处于全局作用域，继而输出 &#39;global&#39;。</p>
+<p>可见，无论函数在哪被调用，也无论它如何被调用，它的词法作用域都只由函数被声明（定义）时所处的位置决定。</p>
+<a href="#块作用域"><h2 id="块作用域">块作用域</h2></a><h3 id="ES6 之前的实现">ES6 之前的实现</h3><p>1.） <code>with</code> 关键字可以将一个对象处理为一个完全隔离的词法作用域，这个对象的属性将将被处理为这个作用域中的变量，外部无法访问。</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> obj = <span class="hljs-comment">{
+  a: 1
+}</span>;
+
+<span class="hljs-keyword">with</span>(obj) <span class="hljs-comment">{
+  a = 12;
+}</span>
+
+console.log(a);
+
+<span class="hljs-comment">//  =&gt; Uncaught ReferenceError: a is not defined</span>
+</code></pre>
+<p>尽管 <code>with</code> 块可以将一个对象处理为词法作用域，但也很明显这样的存在却也十分鸡肋，然并卵，而且有时会产生意向不到的结果。</p>
+<p>看下面这段代码：</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> obj = {
+    <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>
+  };
+
+  <span class="hljs-keyword">with</span>(obj) {
+    <span class="hljs-keyword">var</span> ff = <span class="hljs-string">'some thing happened'</span>;
+    a = <span class="hljs-number">12</span>;
+    b = <span class="hljs-string">'bbbbbbb'</span>;
+  }
+
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'函数内访问 obj:'</span>, obj);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'函数内访问 ff:'</span>, ff);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'函数内访问 b:'</span>, b);
+}
+
+foo();
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'变量外泄 b:'</span>, b);
+</code></pre>
+<p>结果：</p>
+<p><img src="images/eg2.png" alt="js scope"></p>
+<p>由此可见，在 <code>with</code> 内部正常 <code>var</code> 声明的变量并不会限制在这个块作用域中，而是被添加到 <code>with</code> 所处的函数作用域中，还有非对象 obj 的属性名将被当做变量提升到全局作用域中。</p>
+<p>此外 <code>with</code> 是在运行时创建新的作用域的，抛开其‘鸡肋’的存在不说，性能就不敢恭维了，所以并不建议使用（在严格模式中 with 被完全禁止）。</p>
+<p>2.） <code>try/catch</code> 中 try 语句强制抛出的错误可被用于变量定义，仅在 catch 内部有效，间接地实现了块作用域的效果。</p>
+<pre><code class="lang-javascript">try{
+  throw '<span class="hljs-keyword">err</span> can be used <span class="hljs-keyword">as</span> variable';
+} catch(<span class="hljs-keyword">err</span>) {
+  console.<span class="hljs-built_in">log</span>(<span class="hljs-keyword">err</span>);  <span class="hljs-comment">// =&gt; 'err can be used as variable'</span>
+  <span class="hljs-keyword">err</span> = 'change the value';
+  console.<span class="hljs-built_in">log</span>(<span class="hljs-keyword">err</span>);  <span class="hljs-comment">// =&gt; 'change the value'</span>
+}
+
+console.<span class="hljs-built_in">log</span>(<span class="hljs-keyword">err</span>);  <span class="hljs-comment">// =&gt; 'Uncaught ReferenceError: err is not defined'</span>
+</code></pre>
+<p>当然与 with 类似在非严格模式下 try/catch 任一分支中 var 声明的变量将被添加到其外一层作用域中，未 var 声明的变量将直接提升至全局作用域中；</p>
+<p>此外，在 IE8 及其之前版本中 catch 语句中捕获的的错误对象将被添加到所处作用域中，而非 catch 语句内，即 catch 外部依旧可访问到错误对象，IE9 修复了该 bug。</p>
+<h3 id="ES6 语法糖">ES6 语法糖</h3><p>1.） let 关键字在 &#39;{ .. }&#39; 内部声明变量便是一个块作用域，在同一作用域内不能重复定义变量，还有与 var 不同的时不存在变量提升，其它用法与 var 类似。</p>
+<pre><code class="lang-javascript">{
+  <span class="hljs-built_in">let</span> a = <span class="hljs-number">0</span>;
+}
+
+console.<span class="hljs-built_in">log</span>(a);
+
+//  =&gt; 'Uncaught ReferenceError: ada <span class="hljs-built_in">is</span> <span class="hljs-keyword">not</span> defined'
+</code></pre>
+<p>2.) const 声明一个只读的常量。一旦声明，常量的值就不能改变，而且一旦声明变量，就必须立即初始化，不能留到以后赋值，所以对于 const 只声明不赋值，就会报错。</p>
+<p>值得注意的是：</p>
+<blockquote>
+<p>ES6 标准规，如果区块中存在 let 和 const 命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用域。凡是在声明之前就使用这些变量，就会报错。这一特定被称作为暂时性死区（temporal dead zone，简称 TDZ）</p>
+</blockquote>
+<a href="#欺骗词法"><h2 id="欺骗词法">欺骗词法</h2></a><p>欺骗词法，即，在运行时修改（创建）词法作用域。</p>
+<ul>
+<li>with</li>
+<li>eval</li>
+</ul>
+<p>with 之前有说明，我们来看看 eval:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">(str)</span> <span class="hljs-comment">{
+  eval(str);
+  console.log(a);
+}</span>
+
+<span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-string">'var a = 0;'</span>)</span>;</span>
+</code></pre>
+<p>eval 接受一个字符串为参数，并将其内容视为好像书写时就存在这个位置的代码。这样以来就可以利用程序动态产生代码并运行，就好像动态的代码原来就写着在那里一样。</p>
+<blockquote>
+<p>所有在运行时修改或者创建新作用域的做法，都是对 JS 引擎优化工作不负责任（这样的做法会导致引擎无法对作用域的查找进行优化）</p>
+</blockquote>
+<a href="#学习文档"><h2 id="学习文档">学习文档</h2></a><ul>
+<li>《你不知道的JavaScript（上卷）》</li>
+<li><a href="http://es6.ruanyifeng.com/#docs/let">ECMAScript 6 入门 - By 阮一峰</a></li>
+</ul>
+
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+</body>
+</html>

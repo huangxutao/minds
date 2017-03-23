@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+const Fs = require('fs');
+const Mark = require('./lib/mark.js');
+const Render = require('./lib/render.js');
+const Spawn = require('./lib/spawn.js');
+
+/**
+ * 读取目录
+ * 
+ * @param {String} dir 
+ * @param {Function} cb 
+ */
+function readDir(dir, cb) {
+  Fs.readdir(dir, function(err, dir) {
+    if(err) {
+      throw new Error(`读取目录出错：${err}`);
+    } else {
+      cb(dir);
+    }
+  });
+}
+
+readDir('./', function(dir) {
+  let data = {minds: []};
+  let ignoreDir = ['docs', 'node_modules', '.git', 'package.json', '.gitignore', 'README.md'];
+
+  for(let i = 0, len = dir.length; i < len; i++) {
+    if(ignoreDir.indexOf(dir[i]) === -1) {
+      let d = `docs/${dir[i]}`;
+      let from = `${dir[i]}/images`;
+      let to = `docs/${dir[i]}/images`;
+
+      if(Fs.existsSync(from)) {
+        let mind = Fs.readFileSync(`${dir[i]}/README.md`).toString();
+        let mindName = mind.substr(1, mind.indexOf('\n\n') - 1);
+        let enMindName = dir[i].replace(/-/g, ' ');
+        let mindContent = mind.substr(mindName.length + 1);
+
+        Spawn.rmDir(d);
+        Spawn.mkDir(d);
+        Spawn.copyDir(from, to);
+
+        Render('docs/.bin/tpl/detail.html', `${d}/index.html`, {
+          title: mindName,
+          enTitle: enMindName,
+          github: `https://github.com/huangxutao/minds/tree/master/${dir[i]}`,
+          content: Mark(mindContent)
+        });
+
+        data.minds.push({
+          name: mindName,
+          enName: enMindName,
+          url: `${dir[i]}/`,
+          img: `${dir[i]}/images/mind.png`,
+        });
+      }
+
+      Render('docs/.bin/tpl/index.html', 'docs/index.html', data);
+    }
+  }
+});

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="思维导图, 总结汇总">
+  <meta name="x5-page-mode" content="app">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Minds</title>
+  <link rel="stylesheet" href="source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1>Some Minds</h1>
+      <h2>一些总结</h2>
+      <a href="https://github.com/huangxutao/minds">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="main">
+      <% minds.forEach(function(mind) { %>
+      <a href="<%= mind.url %>">
+        <div class="item">
+          <div class="pic"><img src="<%= mind.img %>" alt=""></div>
+          <div class="description">
+            <h1><%= mind.name %></h1>
+            <p><%= mind.enName %></p>
+          </div>
+        </div>
+      </a>
+      <% }); %>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="source/js/script.js"></script>
+</body>
+</html>

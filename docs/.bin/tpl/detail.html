@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总, <%= title %>">
+  <meta name="x5-page-mode" content="app">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1><%= title %></h1>
+      <h2><%= enTitle %></h2>
+      <a href="<%= github %>">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <%- content %>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+</body>
+</html>

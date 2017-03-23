@@ -1,0 +1,327 @@
+html,body{
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  height: 100%;
+  color: #333;
+  font: 16px/1.4 "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a{
+  text-decoration: none;
+}
+
+.header{
+  position: relative;
+  width: 100%;
+  height: 26rem;
+  text-align: center;
+  background: #0099c3;
+  background-image: linear-gradient(120deg, #155799, #159957);
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+  transition: all .6s ease;
+}
+
+.header canvas{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+.header .box{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 6rem 2rem 6.6rem;
+}
+
+.header h1{
+  margin: 0;
+  color: #fff;
+  font-size: 3.2rem;
+  animation: fadeIn .6s ease;
+}
+
+.header h2{
+  margin-bottom: 2rem;
+  color: #a0d5cb;
+  font-size: 1.4rem;
+  font-weight: normal;
+  animation: fadeIn .6s ease;
+}
+
+.header a{
+  display: inline-block;
+  padding: .75rem 1.2rem;
+  color: #a0d5cb;
+  text-decoration: none;
+  border: .12rem solid #a0d5cb;
+  border-radius: .32rem;
+  transition: all .6s ease;
+  animation: fadeIn .6s ease;
+}
+
+.header a:hover{
+  color: #eee;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.content{
+  width: 100%;
+}
+
+.main{
+  margin: 0 auto;
+  padding: 3.2rem 1.2rem;
+  width: 100%;
+  max-width: 66rem;
+  text-align: center;
+  box-sizing: border-box;
+  animation: fadeInUp 1.6s ease;
+}
+
+.main a{
+  display: inline-block;
+  margin: 2rem 1.2rem;
+}
+
+.main .item{
+  display: inline-block;
+  padding: 1.4rem 0 0;
+  width: 18rem;
+  border-radius: .24rem;
+  overflow: hidden;
+  transition: box-shadow .6s ease;
+}
+
+.main .item:hover{
+  box-shadow: 0 .1rem 0.6rem #bbb;
+}
+
+.item .pic{
+  position: relative;
+  height: 10rem;
+  background: #fff;
+  overflow: hidden;
+}
+
+.item .pic img{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  height: 100%;
+}
+
+.item .description{
+  margin-top: 1rem;
+  padding: 1rem .3rem;
+  border-top: .12rem dashed #eee;
+}
+
+.item .description h1{
+  margin: .4rem 0 .2rem;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #333;
+}
+
+.item .description p{
+  margin: 0;
+  font-size: .8rem;
+  color: #bbb;
+}
+
+.footer{
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+.footer p{
+  color: #bbb;
+  font-style: italic;
+  font-size: 1.4rem;
+}
+
+.footer p a{
+  color: #18bc9c;
+  text-decoration: underline;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+    transform: scale(.8);
+  }
+  to{
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp{
+  0%, 32%{
+    opacity: 0;
+    transform: translateY(6rem);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media only screen and (max-width: 640px){
+  .header{
+    height: 18rem;
+  }
+
+  .header .box{
+    padding: 3.2rem 1.2rem 4rem;
+  }
+
+  .header h1{
+    margin: 0;
+    font-size: 2.2rem;
+  }
+
+  .header h2{
+    font-size: 1rem;
+  }
+
+  .header a{
+    display: block;
+  }
+
+  .main a{
+    margin: 2rem 1.2rem 3.6rem;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  /* 定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸 */
+  ::-webkit-scrollbar{
+    width: .6rem;
+    height: .42rem;
+    background-color: #eee;
+  }
+
+  ::-webkit-scrollbar-track:hover{
+    background-color: #eee;
+  }
+
+  /* 定义滑块 内阴影 圆角 */
+  ::-webkit-scrollbar-thumb{
+    background-color: #afafb0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover{
+    background-color: #888;
+  }
+  
+}
+
+.markdown-body{
+  margin: 0 auto;
+  padding: 3.2rem 1.2rem;
+  width: 100%;
+  max-width: 52rem;
+  font-size: 1.14rem;
+  text-align: justify;
+  box-sizing: border-box;
+  animation: fadeInUp 1.6s ease;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 , .markdown-body h4, .markdown-body h5, .markdown-body h6{
+  color: #222;
+  font-weight: normal;
+}
+
+.markdown-body h2{
+  position: relative;
+  margin-top: 4rem;
+  font-size: 2.2rem;
+  font-weight: normal;
+}
+
+.markdown-body h2:hover:after{
+  position: absolute;
+  content: "#";
+  left: -2rem;
+  color: #18bc9c;
+}
+
+.markdown-body h3{
+  font-size: 1.4rem;
+}
+
+.markdown-body li{
+  color: #606c71;
+  line-height: 1.8rem;
+}
+
+.markdown-body p{
+  color: #606c71;
+  line-height: 2rem;
+}
+
+.markdown-body a{
+  color: #18bc9c;
+}
+
+.markdown-body img{
+  max-width: 100%;
+  border-radius: .2rem;
+  box-shadow: 0 0 .3rem #bbb;
+}
+
+.markdown-body img:first-child{
+  box-shadow: none;
+}
+
+.markdown-body blockquote{
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1.2rem;
+  border-left: .2rem solid #18bc9c;
+}
+
+.markdown-body p code{
+  padding: .12rem .2rem;
+  border-radius: .2rem;
+  background: #eee;
+}
+
+.markdown-body pre{
+  padding: 1.4rem 1rem;
+  border-radius: .2rem;
+  border: .3rem dashed #eee;
+  overflow: auto;
+}
+
+.markdown-body pre .hljs-title{
+  color: lightcoral
+}
+
+.markdown-body pre .hljs-keyword{
+  color: #a626a4;
+}
+
+.markdown-body pre .hljs-string{
+  color: #8bc34a;
+}
+
+.markdown-body pre .hljs-number{
+  color: #ffc107;
+}
+
+.markdown-body pre .hljs-comment{
+  color: #ccc;
+}

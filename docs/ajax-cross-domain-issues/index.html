@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总,  Ajax 跨域问题">
+  <meta name="x5-page-mode" content="app">
+  <title> Ajax 跨域问题</title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1> Ajax 跨域问题</h1>
+      <h2>ajax cross domain issues</h2>
+      <a href="https://github.com/huangxutao/minds/tree/master/ajax-cross-domain-issues">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <a href="#我的理解"><h2 id="我的理解">我的理解</h2></a><p><img src="images/mind.png" alt="Ajax 跨域问题"></p>
+<a href="#为什么会存在跨域问题？"><h2 id="为什么会存在跨域问题？">为什么会存在跨域问题？</h2></a><p>浏览器的安全机制限制 -- js 代码不能从不同的服务器读取载入文档内容，这便是浏览器的同源策略。</p>
+<p>做到同源便是要求</p>
+<ol>
+<li>域名</li>
+<li>协议</li>
+<li>端口</li>
+</ol>
+<p>三者均相同，缺一不可。</p>
+<a href="#如何解决？"><h2 id="如何解决？">如何解决？</h2></a><p>基于 Ajax 立场寻求方案：</p>
+<ul>
+<li>HTTP 访问控制即 CORS (IE 10 +，无需改动 js 代码)</li>
+<li>服务器端代理 （兼容性好且无需改动 js 代码，但成本会有些）</li>
+</ul>
+<p>跳过 Ajax 范畴：</p>
+<ul>
+<li>jsonp （GET Method 承载信息量有限，但兼容性好）</li>
+</ul>
+<a href="#代码示例"><h2 id="代码示例">代码示例</h2></a><h3 id="1 .HTTP 访问控制(CORS)">1 .HTTP 访问控制(CORS)</h3><p>在目标服务端添加跨源资源共享 ( CORS ) 机制让 Web 应用服务器能支持跨站访问控制。</p>
+<p>Node Server：</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> app = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.writeHead(<span class="hljs-number">200</span>, {
+    <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>,
+    <span class="hljs-string">'Access-Control-Allow-Origin'</span>: <span class="hljs-string">'*'</span>,  <span class="hljs-comment">// 控制可获取数据的域名， '*' 代表所用</span>
+    <span class="hljs-string">'Access-Control-Allow-Headers'</span>: <span class="hljs-string">'Content-Type'</span>,  <span class="hljs-comment">// 控制可控请求头信息，非必须但如果 Ajax 有用 setRequestHeader 方法设置请求头信息，则必须在服务器端添加相应请求头字段</span>
+    <span class="hljs-string">'Access-Control-Request-Method'</span>: <span class="hljs-string">'GET'</span>  <span class="hljs-comment">// 请求方式控制，非必须 （可选 GET, POST, PUT, DELETE, PATCH 等）</span>
+  });
+
+  res.end(<span class="hljs-built_in">JSON</span>.stringify({
+    name: <span class="hljs-string">'hxtao'</span>
+  }));
+});
+
+app.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Server running at 3000 port...'</span>);
+});
+</code></pre>
+<p>Ajax:</p>
+<pre><code class="lang-javascript">;(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">var</span> getJson = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">url, cb</span>) </span>{
+    <span class="hljs-built_in">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+
+    xhr.open(<span class="hljs-string">'GET'</span>, <span class="hljs-built_in">url</span>);
+    xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">if</span>(xhr.readyState === <span class="hljs-number">4</span> &amp;&amp; cb) {
+        cb(xhr);
+      }
+    };
+    xhr.send();
+  };
+
+  getJson(<span class="hljs-string">'http://localhost:3000'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">xhr</span>) </span>{
+    <span class="hljs-built_in">var</span> res = <span class="hljs-built_in">JSON</span>.parse(xhr.responseText);
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'JSON Data: '</span>, res);
+  });
+}());
+</code></pre>
+<h3 id="2. 服务器端代理">2. 服务器端代理</h3><p>nginx 比较方便 ^_^</p>
+<p>Nginx Sever:</p>
+<pre><code class="lang-nginx">...
+
+server {
+  server_name server_1.com;
+
+  location /images {
+          proxy_pass http:<span class="hljs-comment">//server_2.com/;</span>
+  }
+}
+
+...
+</code></pre>
+<p>如上 <a href="http://server_1.com/images">http://server_1.com/images</a> 下的请求都会被转发到 <a href="http://server_2.com">http://server_2.com</a> 上</p>
+<p>例如：</p>
+<p><a href="http://server_1.com/images/1.png">http://server_1.com/images/1.png</a>  --转发至--&gt; <a href="http://server_2.com/1.png">http://server_2.com/1.png</a></p>
+<h3 id="3. jsonp">3. jsonp</h3><p>jsonp 全称为 JSON with padding，而 padding 意为填充。所以需要注意的是 jsonp ≠ json 不能混淆二者之间的关系。</p>
+<p>jsonp 与 Ajax 不是一回事，而是通过动态插入 <code>script</code> 标记然后出发网络请求，得到 js 文档</p>
+<p>例如现有 a.js:</p>
+<pre><code class="lang-javascript"><span class="hljs-title">var</span> <span class="hljs-class"><span class="hljs-keyword">data</span> = {<span class="hljs-title">name</span>: <span class="hljs-title">hxtao</span>};</span>
+
+<span class="hljs-title">console</span>.log(<span class="hljs-class"><span class="hljs-keyword">data</span>);</span>
+</code></pre>
+<p>然后页面中添加 <code>&lt;script src=&quot;a.js&quot;&gt;&lt;/script&gt;</code> 可想而知，控制台会输出 <code>data</code> , 值得注意的是 console.log() 函数为全局方法。</p>
+<p>所以我们可以简单封装下：</p>
+<p>注：参照上边 <code>console.log()</code> ，回调函数是需要在全局范围内可访问的。</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">var</span> getJSONP = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">url, cb</span>) </span>{
+  <span class="hljs-built_in">var</span> script = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'script'</span>);
+
+  getJSONP.callback = cb;
+
+  <span class="hljs-keyword">if</span>(<span class="hljs-built_in">url</span>.indexOf(<span class="hljs-string">'?'</span>) &lt; <span class="hljs-number">0</span>) {
+    script.src = <span class="hljs-built_in">url</span> + <span class="hljs-string">'/?jsonp=getJSONP.callback'</span>;
+  } <span class="hljs-title">else</span> {
+    script.src = <span class="hljs-built_in">url</span> + <span class="hljs-string">'&amp;jsonp=getJSONP.callback'</span>;
+  }
+
+  <span class="hljs-built_in">document</span>.body.appendChild(script);
+  script.parentNode.removeChild(script);
+};
+
+getJSONP(<span class="hljs-string">'http://localhost:3000/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'get data with jsonp: '</span>, data);
+});
+</code></pre>
+<p>当然还需服务器端支持：</p>
+<p>约定 querystring 中有 jsonp 字段且不为空（有指定回调函数的名称）时返回 js 文档即要求 <code>application/javascript</code> ，否则正常返回 JSON 数据。</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">const</span> app = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-keyword">let</span> data = {name: <span class="hljs-string">'hxtao'</span>};
+  <span class="hljs-keyword">let</span> query = url.parse(req.url, <span class="hljs-literal">true</span>).query;
+
+  <span class="hljs-keyword">if</span>(query &amp;&amp; query.jsonp) {
+    res.writeHead(<span class="hljs-number">200</span>, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/javascript'</span>});
+    data = <span class="hljs-string">`<span class="hljs-subst">${query.jsonp}</span>(<span class="hljs-subst">${JSON.stringify(data)}</span>)`</span>;
+  } <span class="hljs-keyword">else</span> {
+    res.writeHead(<span class="hljs-number">200</span>, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>});
+    data = <span class="hljs-built_in">JSON</span>.stringify(data);
+  }
+
+  res.end(data);
+});
+
+app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Running ....'</span>);
+});
+</code></pre>
+
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+</body>
+</html>

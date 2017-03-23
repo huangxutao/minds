@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总,  how about HTTP/2">
+  <meta name="x5-page-mode" content="app">
+  <title> how about HTTP/2</title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1> how about HTTP/2</h1>
+      <h2>how about http2</h2>
+      <a href="https://github.com/huangxutao/minds/tree/master/how-about-http2">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <a href="#我的理解"><h2 id="我的理解">我的理解</h2></a><p><img src="images/mind.png" alt="http2"></p>
+<a href="#追本溯源"><h2 id="追本溯源">追本溯源</h2></a><p>HTTP/2 基于 google 的 SPDY/2 开发。</p>
+<p>与 SPDY 不同 HTTP/2 支持明文 HTTP 传输，而 SPDY 强制使用 HTTPS；HTTP/2 消息头的压缩算法采用 HPACK ，而 SPDY 采用 DEFLATE 。</p>
+<blockquote>
+<p>PS: 在 Nginx 中必须在开启 HTTPS 的前提下才能使用 HTTP/2</p>
+</blockquote>
+<a href="#new in HTTP/2"><h2 id="new in HTTP/2">new in HTTP/2</h2></a><ul>
+<li>二进制协议</li>
+<li>多路复用</li>
+<li>数据流</li>
+<li>头信息压缩</li>
+<li>服务器推送</li>
+<li>流优先级</li>
+</ul>
+<a href="#why HTTP/2 ?"><h2 id="why HTTP/2 ?">why HTTP/2 ?</h2></a><p>我们先了解几个概念，HTTP/2 将所有传输的信息分割为更小的消息和帧，并对它们采用二进制格式的编码：</p>
+<ul>
+<li>帧（Frame）：HTTP/2 通信的最小单位，每个帧包含帧首部，至少也会标识出当前帧所属的流</li>
+<li>消息（Message）：由一个或多个帧组合而成，例如请求和响应</li>
+<li>连接（Connection）：与 HTTP/1 相同，都是指对应的 TCP 连接</li>
+<li>流（Stream）：已建立的连接上的双向字节流</li>
+</ul>
+<p>还有其它概念性的东西就不一一罗列了，仅仅从一个前端开发者的角度出发， HTTP/2 给人最直观的特性就是 <code>多路复用</code> 和 <code>服务器推送</code> 了</p>
+<h3 id="先说说这多路复用：">先说说这多路复用：</h3><p>要知道现代浏览器单域最大 TCP 连接数一般为 4～6 个左右，这意味着超过这个数量级的连接请求将被暂时挂起，如果请求数量较多文件又大那么就会有很明显延迟。这也就是为什么在实际开发中，要求将多个 js （或者 css） 文件打包压缩在一个文件中，还有雪碧图（CSS Sprites），再有 CDN 部署等等之类的 HACK。</p>
+<p>而在 HTTP/2 的世界里，因为多路复用的新特性 -- 简单点说就是所有请求都是通过一个 TCP 连接并发完成，就不需要额外增加工作量了。</p>
+<h3 id="再来了解下服务器推送：">再来了解下服务器推送：</h3><p>其实在 HTTP1.X 时代我们就有体验过伪服务器端推送了，就是把 JS 或 CSS 资源内联到 HTML 中，如此一来在响应了 HTML 文档请求后就可直接渲染一个完整的页面，这一手段在首屏优化中十分常见（可见<a href="https://www.baidu.com/">百度</a>）；这么一来问题也很突出，就是无法利用浏览器缓存，浪费流量。</p>
+<p>而 HTTP/2 的服务器推送就可神气了，在服务器接受到请求时，就可分析出要推送的资源（无需产生额外的网络请求），然后先发个 PUSH_PROMISE 帧给浏览器，再由浏览器决定是否接受推送（当前无相应缓存则接受否则拒绝），显然这整个过程无需程序员操心，浏览器和服务器会自行沟通。</p>
+<p>很可惜 Nginx 还暂不支持 server push (坑了我一天)，供上 Node 核心代码（完整源码请看 <a href="demo">demo</a>）聊表慰藉：</p>
+<pre><code class="lang-javascript">// ...
+<span class="hljs-keyword">let</span> push_style = res.push(<span class="hljs-string">'/static/style.css'</span>, {
+  status: <span class="hljs-number">200</span>,
+  method: <span class="hljs-string">'GET'</span>,
+  request: {
+    accept: <span class="hljs-string">'*/*'</span>
+  },
+  response: {
+    <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/css'</span>
+  }
+});
+
+push_style.<span class="hljs-keyword">end</span>(static.style);
+// ..
+</code></pre>
+<a href="#体验"><h2 id="体验">体验</h2></a><p><a href="https://http2.akamai.com/demo">HTTP/2 is the future of the Web, and it is here!</a></p>
+<a href="#学习文档"><h2 id="学习文档">学习文档</h2></a><ul>
+<li><a href="https://segmentfault.com/a/1190000002765886">HTTP/2 新特性浅析</a></li>
+<li><a href="http://www.cnblogs.com/yingsmirk/p/5248506.html">HTTP/2协议–特性扫盲篇</a></li>
+<li><a href="https://slemgrim.com/kickstart-into-server-push/">A kick-start into server push</a></li>
+<li><a href="https://odd-one-out.serek.eu/http2-server-push-nginx-cloudflare-wordpress/">HTTP/2 Server Push with NGINX, CloudFlare and WordPress</a></li>
+</ul>
+
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+</body>
+</html>
