@@ -3,7 +3,7 @@
 
 ## 我的理解
 
-![Ajax 跨域问题](mind.png)
+![Ajax 跨域问题](images/mind.png)
 
 
 ## 为什么会存在跨域问题？
