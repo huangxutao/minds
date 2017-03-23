@@ -151,6 +151,10 @@ a{
   color: #bbb;
 }
 
+.comment{
+  padding: 6rem 0 0;
+}
+
 .footer{
   padding: 4rem 0 2rem;
   text-align: center;
@@ -320,12 +324,6 @@ a{
 
 .markdown-body img{
   max-width: 100%;
-  border-radius: .2rem;
-  box-shadow: 0 0 .3rem #bbb;
-}
-
-.markdown-body img:first-child{
-  box-shadow: none;
 }
 
 .markdown-body blockquote{

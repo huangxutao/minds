@@ -1,7 +1,4 @@
 ;(function() {
-  function isTop() {
-
-  }
   /**
    * 随机产生数据
    * 

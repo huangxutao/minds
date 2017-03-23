@@ -152,11 +152,25 @@ app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function"><s
 });
 </code></pre>
 
+      <div class="comment">
+        <div id="disqus_thread"></div>
+      </div>
     </div>
   </div>
   <div class="footer">
     <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
   </div>
   <script src="../source/js/script.js"></script>
+  <script>
+    ;(function() {
+      var d = document;
+      var s = d.createElement('script');
+
+      s.src = 'https://minds-hxtao-xyz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', + new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </body>
 </html>
