@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总,  JS 原型">
+  <meta name="x5-page-mode" content="app">
+  <title> JS 原型</title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1> JS 原型</h1>
+      <h2>js prototype</h2>
+      <a href="https://github.com/huangxutao/minds/tree/master/js-prototype">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <a href="#我的理解"><h2 id="我的理解">我的理解</h2></a><p><img src="images/mind.png" alt="js-prototype"></p>
+<a href="#__proto__ 还是 prototype ？"><h2 id="__proto__ 还是 prototype ？">__proto__ 还是 prototype ？</h2></a><p><code>__proto__</code> 是浏览器生产商给出的，用于访问对象的原型，并非 JS 标准中内容，应尽量避免在生产环境中使用</p>
+<p><img src="images/1.png" alt="js-prototype"></p>
+<p><code>prototype</code> 是构造函数的特有属性，为 JS 标准中的内容，通过构造函数创建的对象会自动引用对应构造函数 prototype 上的属性和方法</p>
+<p>值得注意的是：其它对象没有 <code>prototype</code> 属性</p>
+<p><img src="images/2.png" alt="js-prototype"></p>
+
+      <div class="comment">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+  <script>
+    ;(function() {
+      var d = document;
+      var s = d.createElement('script');
+
+      s.src = 'https://minds-hxtao-xyz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', + new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</body>
+</html>
