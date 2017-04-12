@@ -332,7 +332,6 @@ a{
 }
 
 .markdown-body > p:nth-of-type(1) img{
-  padding-top: 100px;
   box-shadow: none;
 }
 
