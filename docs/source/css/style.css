@@ -326,6 +326,16 @@ a{
   max-width: 100%;
 }
 
+.markdown-body img{
+  border-radius: .2rem;
+  box-shadow: 0 0 .8rem #bbb;
+}
+
+.markdown-body > p:nth-of-type(1) img{
+  padding-top: 100px;
+  box-shadow: none;
+}
+
 .markdown-body blockquote{
   margin-left: 0;
   margin-right: 0;
