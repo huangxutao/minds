@@ -10,6 +10,7 @@ const Fs = require('fs');
  */
 function render(tplFile, htmlFile, data) {
   Ejs.renderFile(tplFile, data, function(err, str) {
+    if(err) {throw new Error(`渲染出错：${err}`)}
     Fs.writeFile(htmlFile, str, function(err) {
       if(err) {
         throw new Error(`写入文件出错：${err}`);

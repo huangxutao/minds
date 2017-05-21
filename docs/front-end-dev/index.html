@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总,  我眼中的前端世界">
+  <meta name="x5-page-mode" content="app">
+  <title> 我眼中的前端世界</title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1> 我眼中的前端世界</h1>
+      <h2>front end dev</h2>
+      <a href="https://github.com/huangxutao/minds/tree/master/front-end-dev">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <a href="#我的理解"><h2 id="我的理解">我的理解</h2></a><p><img src="images/mind.png" alt="http2"></p>
+<p>接触并且正式入坑前端也有近两年了，谈谈我个人对于前端开发的一种理解吧，全为个人体验之谈。</p>
+<a href="#偏向设计"><h2 id="偏向设计">偏向设计</h2></a><p>所谓偏向设计，便是前端开发的最终目的便是将脑子里的 idea 或者设计师提供的设计稿赋予实践，具体开发中会精确到每一像素，还有文字的排版样式，以及一些动效等等，其最终成果是面向于普通大众的。</p>
+<a href="#于后端的交流"><h2 id="于后端的交流">于后端的交流</h2></a><p>前端开发只要不是单纯的静态展示页面，势必会涉及到数据的操作，而数据的具体处理过程是交由后台的同学的来实现的（插一句，相对于前面提到的，我认为后端开发的最终成果是面向专业人士的，比如我们前端的同学），所以在前后端分离大行其道的今天，为了提高开发效率，前后端同学就有必要事先约定数据的交换规则。包括数据的格式（一般 json 比较多还有 xml 之类的）；还有 HTTP 行为（GET、POST、PUT、DELETE ...）。</p>
+<p>在约定完一些规则之后，为了缓解服务器的压力前端的同学可以适当地将一些后端逻辑放到浏览器上来解决，代表成果就是 MVVM 了。</p>
+<a href="#自身的开发架构"><h2 id="自身的开发架构">自身的开发架构</h2></a><p>现在的前端开发其需求已不单单满足于 Web1.0 时代单纯的信息发布，上网随便打开一个页面里面充斥各种 css 样式表以及 javascript 脚本，而页面内容也是更为丰富，功能也更加齐全。很多更俨然就是个单页面应用（SPA）。</p>
+<p>所以 Web1.0 时代的开发手段对于应用级别的开发已是捉襟见肘，为了适应从 WebPage --&gt; WebApp 的转化，随之而来的便是前端工程化。</p>
+<h3 id="前端工程化">前端工程化</h3><p>首先很明显，前端工程化不是一种技术手段而是一种思维方式，它所要解决的问题是：</p>
+<ul>
+<li>如何提高开发效率也就是解放生产力了</li>
+<li>如何提升代码的可维护性（包括代码规范、文档整理等等）</li>
+<li>如何实现性能的优化</li>
+</ul>
+<p>于是各种开发工具也就层出不穷，就拿我本人所接触过且用的比较频繁的来说吧：</p>
+<ul>
+<li>git 版本控制，多人协作开发</li>
+<li>npm 强大的包管理，以及灵活的 npm scripts</li>
+<li>gulp 自动化构建工具</li>
+<li>webpack 出色的打包能力</li>
+<li>sass/scss 一种 css 预编译手段</li>
+<li>eslint JS 代码规范，<a href="https://csspod.com/getting-started-with-eslint/">入门</a></li>
+<li>postcss <a href="https://happycoder.net/what-is-postcss/">CSS 开发中的瑞士军刀</a></li>
+<li>...</li>
+</ul>
+<p>对于这些工具我的态度是看需求，自己用着方便即可（学习其实现原理另说，轮子之心不死啊😄），毕竟我们的目的是利用工具来简化流程方便开发管理。</p>
+<p>而前端工程化具体到技术实现便是模块化开发和组件化开发。</p>
+<h4 id="模块化">模块化</h4><p>组件化的核心思想就是：复用且分而治之。</p>
+<p>对于 JS 而言，实现就多了：</p>
+<ul>
+<li>CommonJS 最为熟悉的应用便在是 NodeJS 中，不适用浏览器环境</li>
+<li>AMD (Asynchronous Module Definition) 弥补 CommonJS 在浏览器环境下的尴尬处境，推崇依赖前置，在定义模块的时候就要声明其依赖的模块</li>
+<li>CMD (Common Module Definition) 推崇就近依赖，只有在用到某个模块的时候再去 require</li>
+</ul>
+<p><a href="https://www.zhihu.com/question/20351507">AMD 和 CMD 的区别有哪些？</a></p>
+<p>CSS 中模块化的实践就是 sass、less、stylus（表示只用过 sass）就不多解释了。</p>
+<h4 id="组件化">组件化</h4><p>那什么又是前端组件化呢？积木都玩过吧或者都听说过吧😂，前端组件就类似于那一个个几何形状的椎啊柱啊，每一个组件之间都是相互独立的个体，拥有一套完整的视觉效果和一些功能，具体到每个组件它都就近维护这自己的一套资源。代表框架 Vue、React。</p>
+
+      <div class="comment">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+  <script>
+    ;(function() {
+      var d = document;
+      var s = d.createElement('script');
+
+      s.src = 'https://minds-hxtao-xyz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', + new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</body>
+</html>
