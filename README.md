@@ -6,4 +6,4 @@ Ubuntu下绘制工具 [xmind](http://www.xmind.net/)
 
 ## Lists
 
-<http://minds.hxtao.xyz>
+<https://minds.hxtao.xyz>

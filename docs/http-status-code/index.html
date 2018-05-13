@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#157878">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="思维导图, 总结汇总,  HTTP 状态码">
+  <meta name="x5-page-mode" content="app">
+  <title> HTTP 状态码</title>
+  <link rel="stylesheet" href="../source/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <canvas width="1024" height="860" id="canvas">
+      <h1>亲，你浏览器太 low 了，赶紧升级哦</h1>
+    </canvas>
+    <div class="box">
+      <h1> HTTP 状态码</h1>
+      <h2>http status code</h2>
+      <a href="https://github.com/huangxutao/minds/tree/master/http-status-code">View on GitHub</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="markdown-body">
+      <a href="#我的整理"><h2 id="我的整理">我的整理</h2></a><p><img src="images/mind.png" alt="js-prototype"></p>
+<p>HTTP 状态码往多了说有60余种，在此整理记录常用具有代表性的几种。</p>
+<a href="#2XX"><h2 id="2XX">2XX</h2></a><p>请求被成功处理</p>
+<ul>
+<li>200 请求处理成功并返回相应信息</li>
+<li>204 请求处理成功，但没有资源返回</li>
+<li>206 Partial Content 范围请求，响应报文中包含由 Content-Range 指定范围的实体内容</li>
+</ul>
+<a href="#3XX"><h2 id="3XX">3XX</h2></a><p>基本上与重定向有关</p>
+<ul>
+<li>301 Moved Permanently 永久性重定向，规范是不允许客户端在重定向时改变请求方式，但是很多浏览器视为303响应，并用 GET 方式访问 Location 中的 URI</li>
+<li>302 Found 临时性重定向，规范同 301 不允许客户端在重定向时改变请求方式 ...</li>
+<li>303 See Other 重定向，重新以 GET 方式获取相应资源</li>
+<li>304 Not Modified 多用于缓存机制中</li>
+<li>307 Temporary Redirect 临时重定向，不会重写请求方式 (POST -&gt; GET)</li>
+</ul>
+<a href="#4XX"><h2 id="4XX">4XX</h2></a><p>多在客户端发生错误</p>
+<ul>
+<li>400 请求报文中存在语法错误 （例如：POST JSON 时 json 格式出错服务器无法理解请求）</li>
+<li>401 认证失败</li>
+<li>403 请求被拒，权限不足</li>
+<li>404 一般用于请求资源不存在或者拒绝请求但不想表明原因</li>
+</ul>
+<a href="#5XX"><h2 id="5XX">5XX</h2></a><p>服务器本身发生错误</p>
+<ul>
+<li>500 Internal Server Error 服务器处理请求时出错，多为 web 应用程序 bug 所致</li>
+<li>503 Server Unavailable 多出现于服务器处于超负载或停机维护时，无法处理请求</li>
+</ul>
+<a href="#参考书籍"><h2 id="参考书籍">参考书籍</h2></a><p>《图解HTTP》</p>
+
+      <div class="comment">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2017 <a href="http://about.hxtao.me">hxtao</a></p>
+  </div>
+  <script src="../source/js/script.js"></script>
+  <script>
+    ;(function() {
+      var d = document;
+      var s = d.createElement('script');
+
+      s.src = 'https://minds-hxtao-xyz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', + new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</body>
+</html>
