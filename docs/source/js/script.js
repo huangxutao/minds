@@ -1,6 +1,7 @@
 ;(function() {
   // 粒子相关
-  var MAX_RADIUS = 18,
+  var PIXEL_RATIO = window.devicePixelRatio || 2;
+  var MAX_RADIUS = 18 * PIXEL_RATIO,
       NUM = 25,
       particle = null,
       particles = [];
@@ -8,7 +9,7 @@
   // 粒子的原型对象
   var ball = {
     color: 'rgba(255, 255, 255, 0.36)',
-    radius: 20,
+    radius: MAX_RADIUS,
     setColor: function (color) {
       this.color = color;
     },
@@ -25,10 +26,19 @@
   };
 
   // 画布相关
+  var header = document.querySelector('.header');
   var canvas = document.querySelector('#canvas'),
-      canvasWidth = canvas.width,
-      canvasHeight = canvas.height,
+      clientWidth = header.offsetWidth * PIXEL_RATIO,
+      clientHeight = header.offsetHeight * PIXEL_RATIO,
+      canvasWidth = clientWidth,
+      canvasHeight = clientHeight,
       ctx = canvas.getContext('2d');
+
+
+  canvas.width = clientWidth;
+  canvas.height = clientHeight;
+
+  // canvas.style.transform = 'scale(' + (1 / PIXEL_RATIO) + ')';
   
   // 数学函数、常量 PI
   var PI = Math.PI,
@@ -58,7 +68,7 @@
     }
 
     ctx.beginPath();
-    ctx.lineWidth = 0.6;
+    ctx.lineWidth = 0.6 * PIXEL_RATIO;
     ctx.moveTo(pointA.x, pointA.y);
     ctx.lineTo(pointB.x, pointB.y);
     ctx.strokeStyle = 'rgba(255, 255, 255, '+ (1 - distance/limt) +')';
